@@ -6,7 +6,7 @@ RUN npm cache clean
 RUN npm install
 COPY . /usr/src/app
 EXPOSE 4200
-CMD ["npm", "start"]
+# CMD ["npm", "start"]
 
 # use a node base image
 # FROM node:8-onbuild
