@@ -15,7 +15,10 @@ node{
     stage('install npm') {
         echo 'install npm'
         try{
-            sh 'npm install'
+            // sh 'npm install'
+            withNPM(npmrcConfig: 'my-custom-nprc') {
+                sh 'npm install'
+            }
         }catch(any){
             currentBuild.result = 'FAILURE'
         }
