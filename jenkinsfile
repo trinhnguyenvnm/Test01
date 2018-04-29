@@ -1,35 +1,34 @@
-// node{
+node{
     
-//     echo 'Hello world'
+    echo 'Hello world'
     
-//     stage('Clone code') {
-//         echo 'Clone code'
-//     }
-
-//     stage('install npm') {
-//         echo 'install npm'
-//     }
-
-//     stage('Unit Test') {
-//         echo 'run UT'
-//     }
-
-//     stage('Deploy') {
-//         echo 'deploy'
-//     }
-// }
-
-pipeline {
-    agent any
-    stages{
-        stage('Clone'){
-            echo 'Clone'
+    stage('Clone code') {
+        echo 'Clone code'
+        try{
+            checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/trinhnguyenvnm/Test01.git']]])
+        }catch(any){
+		    currentBuild.result = 'FAILURE'
+		    throw any
         }
-        stage('Build'){
-            echo 'Build'
+        if(currentBuild.result = 'SUCCESS'){
+            echo 'T:Success clone code'
         }
-        stage('UT'){
-            echo 'UT'
+    }
+
+    stage('install npm') {
+        echo 'install npm'
+        try{
+            sh 'npm install'
+        }catch(any){
+            currentBuild.result = 'FAILURE'
         }
+    }
+
+    stage('Unit Test') {
+        echo 'run UT'
+    }
+
+    stage('Deploy') {
+        echo 'deploy'
     }
 }
