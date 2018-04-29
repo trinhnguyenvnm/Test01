@@ -6,6 +6,7 @@ node{
         echo 'Clone code'
         try{
             checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/trinhnguyenvnm/Test01.git']]])
+            currentBuild.result = 'SUCCESS'
         }catch(any){
 		    currentBuild.result = 'FAILURE'
 		    throw any
@@ -15,10 +16,12 @@ node{
     stage('install npm') {
         echo 'install npm'
         try{
-            // sh 'npm install'
-            withNPM(npmrcConfig: 'my-custom-nprc') {
+            nodejs(configId: 'c3cfcfec-3d5f-4eca-8a47-dec39f3f3570', nodeJSInstallationName: 'NodeJS v9-latest') {
                 sh 'npm install'
+                sh 'npm install @angular/cli'
+                currentBuild.result = 'SUCCESS'
             }
+
         }catch(any){
             currentBuild.result = 'FAILURE'
         }
@@ -26,6 +29,16 @@ node{
 
     stage('Unit Test') {
         echo 'run UT'
+
+        try{
+            nodejs(configId: 'c3cfcfec-3d5f-4eca-8a47-dec39f3f3570', nodeJSInstallationName: 'NodeJS v9-latest') {
+                sh 'ng test --single-run true'
+                currentBuild.result = 'SUCCESS'
+            }
+
+        }catch(any){
+            currentBuild.result = 'FAILURE'
+        }
     }
 
     stage('Deploy') {

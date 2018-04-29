@@ -2,6 +2,7 @@ import { NgModule }       from '@angular/core';
 import { BrowserModule }  from '@angular/platform-browser';
 import { FormsModule }    from '@angular/forms';
 import { HttpClientModule }    from '@angular/common/http';
+import { RouterModule, Routes } from '@angular/router';
 
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService }  from './in-memory-data.service';
@@ -20,6 +21,7 @@ import { MessagesComponent }    from './messages/messages.component';
 @NgModule({
   imports: [
     BrowserModule,
+    RouterModule,
     FormsModule,
     AppRoutingModule,
     HttpClientModule,
