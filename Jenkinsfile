@@ -32,7 +32,7 @@ node{
 
         try{
             nodejs(configId: 'c3cfcfec-3d5f-4eca-8a47-dec39f3f3570', nodeJSInstallationName: 'NodeJS v9-latest') {
-                sh 'ng test --single-run true'
+                sh 'npm test'
                 currentBuild.result = 'SUCCESS'
             }
 
@@ -43,5 +43,15 @@ node{
 
     stage('Deploy') {
         echo 'deploy'
+
+        try{
+            nodejs(configId: 'c3cfcfec-3d5f-4eca-8a47-dec39f3f3570', nodeJSInstallationName: 'NodeJS v9-latest') {
+                sh 'npm run-script build'
+                // TODO: deploy to server
+                currentBuild.result = 'SUCCESS'
+            }
+        } catch(any) {
+            currentBuild.result = 'FAILURE'
+        }
     }
 }
