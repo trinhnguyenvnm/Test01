@@ -2,19 +2,19 @@ node{
     
     echo 'Hello world'
     
-    stage ('Clone code') {
+    stage('Clone code') {
         echo 'Clone code'
     }
 
-    stage ('install npm') {
+    stage('install npm') {
         echo 'install npm'
     }
 
-    stage ('Unit Test') {
+    stage('Unit Test') {
         echo 'run UT'
     }
 
-    stage ('Deploy') {
+    stage('Deploy') {
         echo 'deploy'
     }
 }
