@@ -10,9 +10,6 @@ node{
 		    currentBuild.result = 'FAILURE'
 		    throw any
         }
-        if(currentBuild.result = 'SUCCESS'){
-            echo 'T:Success clone code'
-        }
     }
 
     stage('install npm') {
