@@ -1,20 +1,35 @@
-node{
+// node{
     
-    echo 'Hello world'
+//     echo 'Hello world'
     
-    stage('Clone code') {
-        echo 'Clone code'
-    }
+//     stage('Clone code') {
+//         echo 'Clone code'
+//     }
 
-    stage('install npm') {
-        echo 'install npm'
-    }
+//     stage('install npm') {
+//         echo 'install npm'
+//     }
 
-    stage('Unit Test') {
-        echo 'run UT'
-    }
+//     stage('Unit Test') {
+//         echo 'run UT'
+//     }
 
-    stage('Deploy') {
-        echo 'deploy'
+//     stage('Deploy') {
+//         echo 'deploy'
+//     }
+// }
+
+pipeline {
+    agent any
+    stages{
+        stage('Clone'){
+            echo 'Clone'
+        }
+        stage('Build'){
+            echo 'Build'
+        }
+        stage('UT'){
+            echo 'UT'
+        }
     }
 }
