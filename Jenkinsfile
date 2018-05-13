@@ -1,9 +1,9 @@
 node{
     
-    echo 'Hello world'
+    echo 'Demo CICD'
     
     stage('Clone code') {
-        echo 'Clone code'
+        echo 'Step 1: Clone code'
         try{
             checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/trinhnguyenvnm/Test01.git']]])
             currentBuild.result = 'SUCCESS'
@@ -14,11 +14,10 @@ node{
     }
 
     stage('install npm') {
-        echo 'install npm'
+        echo 'Step 2: Install npm'
         try{
-            nodejs(configId: 'c3cfcfec-3d5f-4eca-8a47-dec39f3f3570', nodeJSInstallationName: 'NodeJS v9-latest') {
-                sh 'npm install'
-                sh 'npm install @angular/cli'
+            nodejs(configId: 'trinh-npm-config-id', nodeJSInstallationName: 'NodeJS v9-latest') {
+                // sh 'npm install'
                 currentBuild.result = 'SUCCESS'
             }
 
@@ -28,10 +27,10 @@ node{
     }
 
     stage('Unit Test') {
-        echo 'run UT'
+        echo 'Step 3: Run UT'
 
         try{
-            nodejs(configId: 'c3cfcfec-3d5f-4eca-8a47-dec39f3f3570', nodeJSInstallationName: 'NodeJS v9-latest') {
+            nodejs(configId: 'trinh-npm-config-id', nodeJSInstallationName: 'NodeJS v9-latest') {
                 sh 'npm test'
                 currentBuild.result = 'SUCCESS'
             }
@@ -42,10 +41,10 @@ node{
     }
 
     stage('Deploy') {
-        echo 'deploy'
+        echo 'Step 4: Build product'
 
         try{
-            nodejs(configId: 'c3cfcfec-3d5f-4eca-8a47-dec39f3f3570', nodeJSInstallationName: 'NodeJS v9-latest') {
+            nodejs(configId: 'trinh-npm-config-id', nodeJSInstallationName: 'NodeJS v9-latest') {
                 sh 'npm run-script build'
                 // TODO: deploy to server
                 currentBuild.result = 'SUCCESS'
@@ -55,3 +54,5 @@ node{
         }
     }
 }
+
+
